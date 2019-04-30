@@ -4,6 +4,9 @@ import com.tcpAgent.TCPListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.IOException;
 
 
 /**
@@ -18,13 +21,16 @@ public class AndroidCameraServerGui {
 
 
 
-    public AndroidCameraServerGui(TCPListener myTCPListener) {
+
+    public AndroidCameraServerGui(String address,int port) {
+
+
         //gui
         jFrame = new JFrame("Camera Monitor");
         jFrame.setSize(1124,768);
         jFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         //JPanel set component
-        jPanel = readyJPanel(myTCPListener);
+        jPanel = readyJPanel(address,port);
         //image gbc
         GridBagConstraints gbc =new GridBagConstraints();
         gbc.gridy=2;
@@ -38,7 +44,7 @@ public class AndroidCameraServerGui {
     }
 
 
-    public  JPanel readyJPanel(TCPListener inTCPListener){
+    public  JPanel readyJPanel(String address,int port){
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setBackground(Color.pink);
         GridBagConstraints bagConstraints = new GridBagConstraints();
@@ -60,26 +66,29 @@ public class AndroidCameraServerGui {
         bagConstraints.gridx=1;
         bagConstraints.gridy=0;
         bagConstraints.fill=GridBagConstraints.HORIZONTAL;
-        JTextField jTextField1 = new JTextField(inTCPListener.getCurrIpAddress());
+        JTextField jTextField1 = new JTextField(address);
         jTextField1.setHorizontalAlignment(JTextField.CENTER);
         panel.add(jTextField1,bagConstraints);
 
         bagConstraints.gridx=1;
         bagConstraints.gridy=1;
         bagConstraints.fill=GridBagConstraints.HORIZONTAL;
-        JTextField jTextField2 = new JTextField(Integer.toString(inTCPListener.getPort()));
+        JTextField jTextField2 = new JTextField(Integer.toString(port));
         jTextField2.setHorizontalAlignment(JTextField.CENTER);
         panel.add(jTextField2,bagConstraints);
 
-//        bagConstraints.gridx=1;
-//        bagConstraints.gridy=1;
-//        bagConstraints.fill=GridBagConstraints.HORIZONTAL;
+//        bagConstraints.gridx=0;
+//        bagConstraints.gridy=3;
+//        bagConstraints.fill=GridBagConstraints.REMAINDER;
 //        JButton jb = new JButton();
-//        jb.addActionListener(new ActionListener() {
-//            @Override
-//            public void actionPerformed(ActionEvent e) {
-//                imLabel.setIcon(new ImageIcon("./res/chihaya02.jpg"));
+//        jb.addActionListener(e -> {
+//            try {
+//                imLabel.setIcon(tcpListener.receivingImage());
+//            } catch (IOException ex) {
+//                ex.printStackTrace();
 //            }
+//
+////                imLabel.setIcon(new ImageIcon("./res/chihaya02.jpg"));
 //        });
 //        panel.add(jb,bagConstraints);
 

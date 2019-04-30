@@ -30,12 +30,12 @@ public class CUploadPhotoServer {
             fos.write(buf,0,len);
         }
         //获取输出流，准备给客户端发送消息
-        OutputStream out = s.getOutputStream();
-        out.write("上传成功".getBytes());
+//        OutputStream out = s.getOutputStream();
+//        out.write("上传成功".getBytes());
         //关闭资源
         fos.close();
         in.close();
-        out.close();
+//        out.close();
         s.close();
         ss.close();
     }}
