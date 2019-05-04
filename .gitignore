@@ -1,4 +1,6 @@
 .idea/*
 out/*
 pc/out/*
-android_camera_on_pc.iml
+pc/.idea/*
+pc/pc.iml
+pc/android_camera_on_pc.iml
