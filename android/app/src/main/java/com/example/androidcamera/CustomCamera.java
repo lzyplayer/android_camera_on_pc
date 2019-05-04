@@ -49,6 +49,7 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
     private File tempFile;
     private Camera.PictureCallback mPictureCallback = new Camera.PictureCallback(){
 
+
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
 
@@ -81,9 +82,16 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
 
 //            fileDelete(cFilePath);
 
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             mCamera.takePicture(null,null, mPictureCallback);
         }
     };
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
