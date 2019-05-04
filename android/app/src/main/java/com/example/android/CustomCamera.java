@@ -1,4 +1,4 @@
-package com.example.androidcamera;
+package com.example.android;
 
 import android.Manifest;
 import android.app.Activity;
@@ -49,7 +49,6 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
     private File tempFile;
     private Camera.PictureCallback mPictureCallback = new Camera.PictureCallback(){
 
-
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
 
@@ -59,11 +58,6 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
                     fos.write(data);
                     fos.close();
 
-                    /////////////////
-//                    Intent intent = new Intent(CustomCamera.this, ResultAty.class);
-//                    intent.putExtra("picPath", tempFile.getAbsolutePath());
-//                    startActivity(intent);
-                    ////////////////
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -71,16 +65,11 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
                 e.printStackTrace();
             }
 
-//            bitmap = BitmapFactory.decodeFile(cFilePath);
-//            imageView.setImageBitmap(bitmap);
-
             try {
                 tcpSender.sendImage(cFilePath);
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
-//            fileDelete(cFilePath);
 
             try {
                 Thread.sleep(500);
@@ -91,7 +80,6 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
             mCamera.takePicture(null,null, mPictureCallback);
         }
     };
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -104,11 +92,7 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
         cFilePath = Environment.getExternalStorageDirectory().getPath();
         cFilePath = cFilePath + "/temp.png";
         tempFile = new File(cFilePath);
-        imageView = (ImageView) findViewById(R.id.pic);
         editText = (EditText) findViewById(R.id.et);
-
-//        bt = (Button) findViewById(R.id.btp);
-//        bt.setOnClickListener(new MyListener());
 
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
@@ -181,38 +165,10 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
 
         mCamera.takePicture(null,null, mPictureCallback);
 
-//        Bitmap bitmap;
-//        int i = 100;
-//        while(i-->0){
-//            mCamera.takePicture(null,null, mPictureCallback);
-//
-////            try {
-////                tcpSender.sendImage(cFilePath);
-////            } catch (IOException e) {
-////                e.printStackTrace();
-////            }
-////            bitmap = BitmapFactory.decodeFile(cFilePath);
-////            imageView.setImageBitmap(bitmap);
-////            fileDelete(cFilePath);
-//
-//            try {
-//                Thread.sleep(500);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
 
-        }
-
-
-
-    private void fileDelete(String fileName){
-        File file = new File(fileName);
-        if (file.exists()){
-            if (file.isFile()){
-                file.delete();
-            }
-        }
     }
+
+
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
@@ -230,55 +186,5 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
         releaseCamera();
     }
 
-//    class MyListener implements View.OnClickListener {
-//
-//        @Override
-//        public void onClick(View v) {
-//            List<String> permissionList = new ArrayList<String>();
-//            if(ContextCompat.checkSelfPermission(CustomCamera.this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//                permissionList.add(Manifest.permission.READ_EXTERNAL_STORAGE);
-//            }
-//            if(ContextCompat.checkSelfPermission(CustomCamera.this,Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-//                permissionList.add(Manifest.permission.WRITE_EXTERNAL_STORAGE);
-//            }
-//            if(ContextCompat.checkSelfPermission(CustomCamera.this,Manifest.permission.INTERNET) != PackageManager.PERMISSION_GRANTED) {
-//                permissionList.add(Manifest.permission.INTERNET);
-//            }
-//            if(ContextCompat.checkSelfPermission(CustomCamera.this,Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-//                permissionList.add(Manifest.permission.CAMERA);
-//            }
-//            if(!permissionList.isEmpty()) {
-//                String[] permissions = permissionList.toArray(new String[permissionList.size()]);
-//                ActivityCompat.requestPermissions(CustomCamera.this,permissions,1);
-//            } else {
-////                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-////                Uri photoUri = Uri.fromFile(new File(mFilePath));
-////                intent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
-////                startActivityForResult(intent,REQ_2);
-//            }
-//        }
-//    }
-//
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-//        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-//        if(requestCode == 1) {
-//            if(grantResults.length > 0) {
-//                for(int result : grantResults) {
-//                    if(result != PackageManager.PERMISSION_GRANTED) {
-//                        Toast.makeText(CustomCamera.this,"必须同意所有权限才能使用本程序",Toast.LENGTH_SHORT).show();
-//                        finish();
-//                        return;
-//                    }
-//                }
-////                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-////                Uri photoUri = Uri.fromFile(new File(mFilePath));
-////                intent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
-////                startActivityForResult(intent,REQ_2);
-//            } else {
-//                Toast.makeText(CustomCamera.this,"发生未知错误",Toast.LENGTH_SHORT).show();
-//                finish();
-//            }
-//        }
-//    }
 }
+

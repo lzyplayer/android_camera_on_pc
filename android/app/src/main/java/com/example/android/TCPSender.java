@@ -1,4 +1,4 @@
-package com.example.androidcamera;
+package com.example.android;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -37,3 +37,4 @@ public class TCPSender {
         return true;
     }
 }
+

@@ -1,4 +1,4 @@
-package com.example.androidcamera;
+package com.example.android;
 
 import android.Manifest;
 import android.app.Activity;
@@ -50,6 +50,9 @@ public class MainActivity extends AppCompatActivity {
         StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
         StrictMode.setVmPolicy(builder.build());
 
+        StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         bt = (Button) findViewById(R.id.bt2);
         bt.setOnClickListener(new MyListener());
     }
@@ -75,10 +78,6 @@ public class MainActivity extends AppCompatActivity {
                 String[] permissions = permissionList.toArray(new String[permissionList.size()]);
                 ActivityCompat.requestPermissions(MainActivity.this,permissions,1);
             } else {
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                Uri photoUri = Uri.fromFile(new File(mFilePath));
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
-//                startActivityForResult(intent,REQ_2);
             }
         }
     }
@@ -95,10 +94,6 @@ public class MainActivity extends AppCompatActivity {
                         return;
                     }
                 }
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                Uri photoUri = Uri.fromFile(new File(mFilePath));
-//                intent.putExtra(MediaStore.EXTRA_OUTPUT,photoUri);
-//                startActivityForResult(intent,REQ_2);
             } else {
                 Toast.makeText(MainActivity.this,"发生未知错误",Toast.LENGTH_SHORT).show();
                 finish();
@@ -107,49 +102,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-//    public void startCamera1(View view){
-//        Intent intent=new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        startActivityForResult(intent, REQ_1);
-//    }
-
-//    public void startCamera2(View view){
-//        Intent intent =new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//        Uri photoUri = Uri.fromFile(new File(mFilePath));
-//        intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
-//        startActivityForResult(intent, REQ_2);
-//    }
-
-
-
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (resultCode == RESULT_OK){
-//            if (requestCode == REQ_1){
-//                Bundle bundle = data.getExtras();
-//                Bitmap bitmap = (Bitmap) bundle.get("data");
-//                mImageView.setImageBitmap(bitmap);
-//            }
-//            else if (requestCode == REQ_2){
-//                FileInputStream fis = null;
-//                try {
-//                    fis = new FileInputStream(mFilePath);
-//                    Bitmap bitmap = BitmapFactory.decodeStream(fis);
-//                    mImageView.setImageBitmap(bitmap);
-//                } catch (FileNotFoundException e) {
-//                    e.printStackTrace();
-//                }finally {
-//                    try {
-//                        fis.close();
-//                    } catch (IOException e) {
-//                        e.printStackTrace();
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     public void customCamera(View view){
         startActivity(new Intent(this, CustomCamera.class));
     }
 }
+
