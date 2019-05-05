@@ -175,7 +175,6 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
     }
 
     class TakePic extends Thread{
-
         private Camera mCamera;
         private Camera.PictureCallback mPictureCallback;
 
@@ -186,8 +185,6 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
 
         public void run(){
             while(true){
-
-
                 try {
                     mCamera.takePicture(null,null, mPictureCallback);
                 } catch (Exception e) {
