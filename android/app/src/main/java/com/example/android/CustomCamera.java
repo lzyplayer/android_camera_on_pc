@@ -17,6 +17,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -37,8 +38,9 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
 
     private boolean waitFlag = true;
 
-    TCPSender tcpSender = new TCPSender("192.168.1.106", 31845);
+    TCPSender tcpSender = new TCPSender("192.168.151.2", 31845);
 
+    private TakePic takePic;
     private Button bt;
     private Camera mCamera;
     private SurfaceView mPreview;
@@ -47,6 +49,7 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
     private EditText editText;
     private String cFilePath;
     private File tempFile;
+//    private FileOutputStream fos;
     private Camera.PictureCallback mPictureCallback = new Camera.PictureCallback(){
 
         @Override
@@ -71,13 +74,13 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
                 e.printStackTrace();
             }
 
-            try {
-                Thread.sleep(500);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                Thread.sleep(500);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
 
-            mCamera.takePicture(null,null, mPictureCallback);
+//            mCamera.takePicture(null,null, mPictureCallback);
         }
     };
 
@@ -99,6 +102,7 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
 
         StrictMode.ThreadPolicy policy=new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
+
     }
 
     @Override
@@ -158,14 +162,46 @@ public class CustomCamera extends AppCompatActivity implements SurfaceHolder.Cal
         Camera.Parameters parameters = mCamera.getParameters();
         parameters.setPictureFormat(ImageFormat.JPEG);
         parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
-        parameters.setPictureSize(1200, 1024);
-        parameters.setPreviewSize(1200, 1024);
-//        parameters.setPictureSize(648, 480);
-//        parameters.setPreviewSize(648, 480);
+//        parameters.setPictureSize(1200, 1024);
+//        parameters.setPreviewSize(1200, 1024);
+        parameters.setPictureSize(648, 480);
+        parameters.setPreviewSize(648, 480);
 
-        mCamera.takePicture(null,null, mPictureCallback);
+//        mCamera.takePicture(null,null, mPictureCallback);
+
+        takePic = new TakePic(mCamera, mPictureCallback);
+        takePic.start();
+
+    }
+
+    class TakePic extends Thread{
+
+        private Camera mCamera;
+        private Camera.PictureCallback mPictureCallback;
+
+        public TakePic(Camera camera, Camera.PictureCallback pcb){
+            mCamera = camera;
+            mPictureCallback = pcb;
+        }
+
+        public void run(){
+            while(true){
 
 
+                try {
+                    mCamera.takePicture(null,null, mPictureCallback);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                try {
+                    Thread.sleep(500);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 

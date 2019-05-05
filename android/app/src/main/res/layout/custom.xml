@@ -8,8 +8,8 @@
         android:id="@+id/et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="192.168.1.106"
-        android:autofillHints="192.168.1.106"
+        android:hint="192.168.151.2"
+        android:autofillHints="192.168.151.2"
         android:maxLines="1"
         android:inputType="number"
         android:digits="0123456789."/>
